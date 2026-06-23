@@ -1,0 +1,30 @@
+<template>
+    <lightning-card title="WhatsApp Campaign Template Message Sender">
+
+        <div class="slds-p-around_medium">
+            <p>Record Id: {recordId}</p>
+            <lightning-combobox
+                label="Template"
+                options={templateOptions}
+                value={selectedTemplate}
+                onchange={handleTemplateChange}>
+            </lightning-combobox>
+
+            <lightning-textarea
+                label="Message Variable"
+                value={messageVariable}
+                onchange={handleMessageChange}
+                class="slds-m-top_medium">
+            </lightning-textarea>
+
+            <lightning-button
+                label="Send WhatsApp"
+                variant="brand"
+                onclick={handleSend}
+                class="slds-m-top_medium">
+            </lightning-button>
+
+        </div>
+
+    </lightning-card>
+</template>

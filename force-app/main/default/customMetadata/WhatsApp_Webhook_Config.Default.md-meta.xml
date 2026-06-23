@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Default</label>
+    <protected>false</protected>
+    <values>
+        <field>Verify_Token__c</field>
+        <value xsi:type="xsd:string"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">REPLACE_WITH_WEBHOOK_VERIFY_TOKEN</value>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,109 @@
+<template>
+    <lightning-card title="WhatsApp Chat">
+        <div class="chat-container" onscroll={handleChatScroll}>
+            <template if:true={messages.length}>
+                <template for:each={messages} for:item="msg">
+                    <div key={msg.id} class={msg.cssClass}>
+                        <div class="bubble">
+                            <template if:true={msg.isAttachment}>
+                                <template if:true={msg.isImageAttachment}>
+                                    <template if:true={msg.downloadUrl}>
+                                        <div class="image-square-bubble">
+                                            <img class="inline-image" src={msg.downloadUrl} alt={msg.fileName} />
+                                        </div>
+                                    </template>
+                                    <template if:false={msg.downloadUrl}>
+                                        <p class="attachment-line">{msg.attachmentLabel}</p>
+                                    </template>
+                                </template>
+                                <template if:false={msg.isImageAttachment}>
+                                    <p class="attachment-line">
+                                        <span class="attachment-file-name">{msg.attachmentLabel}</span>
+                                    </p>
+                                </template>
+
+                                <template if:true={msg.message}>
+                                    <p class="attachment-caption">{msg.message}</p>
+                                </template>
+
+                                <template if:true={msg.previewUrl}>
+                                    <a class="attachment-link" href={msg.previewUrl} target="_blank">
+                                        Open file
+                                    </a>
+                                </template>
+                            </template>
+
+                            <template if:false={msg.isAttachment}>
+                                <p>{msg.message}</p>
+                            </template>
+
+                            <small>{msg.displayTime}</small>
+                        </div>
+                    </div>
+                </template>
+            </template>
+
+            <template if:false={messages.length}>
+                <div class="empty-chat">No messages yet</div>
+            </template>
+
+            <template if:true={showScrollToLatest}>
+                <button
+                    type="button"
+                    class="scroll-latest-button"
+                    title="Scroll to latest"
+                    aria-label="Scroll to latest message"
+                    onclick={handleScrollToLatest}>
+                    <svg class="scroll-latest-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M6.7 9.2a1 1 0 0 1 1.4 0L12 13.1l3.9-3.9a1 1 0 1 1 1.4 1.4l-4.6 4.6a1 1 0 0 1-1.4 0L6.7 10.6a1 1 0 0 1 0-1.4z"></path>
+                    </svg>
+                </button>
+            </template>
+        </div>
+
+        <div class="input-section">
+            <button
+                type="button"
+                class="attach-icon-button"
+                aria-label="Attach file"
+                title="Attach file"
+                onclick={handleAttachClick}
+                disabled={isUploading}>
+                <span class="slds-assistive-text">Attach file</span>
+                <svg class="attach-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M16.5 6.5l-7.8 7.8a3 3 0 0 0 4.24 4.24l8.14-8.14a5 5 0 1 0-7.07-7.07L5.9 11.5a7 7 0 0 0 9.9 9.9l7.06-7.06" />
+                </svg>
+            </button>
+
+            <input class="attach-file-input" type="file" onchange={handleFileSelected} />
+
+            <lightning-input
+                class="chat-input"
+                type="text"
+                label="Type a message"
+                variant="label-hidden"
+                value={newMessage}
+                onchange={handleChange}
+                onkeydown={handleKeyDown}
+                placeholder="Type a message">
+            </lightning-input>
+
+            <template if:true={pendingAttachmentName}>
+                <span class="attachment-chip" title={pendingAttachmentName}>
+                    {pendingAttachmentName}
+                </span>
+            </template>
+
+            <button
+                type="button"
+                class="send-icon-button"
+                aria-label="Send message"
+                title="Send"
+                onclick={handleSend}
+                disabled={isSending}>
+                <span class="slds-assistive-text">Send message</span>
+                <span class="send-icon" aria-hidden="true">➤</span>
+            </button>
+        </div>
+    </lightning-card>
+</template>
