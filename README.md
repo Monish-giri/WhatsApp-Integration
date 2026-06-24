@@ -177,6 +177,7 @@ force-app/main/default/
 │   ├── WhatsAppMediaService.cls            # Inbound media download
 │   ├── WhatsAppInboundMediaQueueable.cls   # Async media retry
 │   ├── WhatsAppChatController.cls          # LWC Apex API
+│   ├── WhatsAppCampaignController.cls      # Campaign template bulk send
 │   ├── WhatsAppContactTriggerHandler.cls   # Phone → CRM matching
 │   └── WhatsAppWebhookWrapper.cls          # DTO (legacy/helper)
 ├── triggers/
@@ -198,7 +199,7 @@ force-app/main/default/
     └── WhatsApp_Webhook_Config.Default.md-meta.xml
 ```
 
-> **Note:** `whatsAppCampaignSender` references `WhatsAppCampaignController`, which is **not included** in this extract. Add that controller or remove the LWC if you do not need campaign templates.
+> **Note:** `WhatsAppCampaignController` requires custom metadata type `WhatsApp_Template__mdt` (template definitions). Retrieve or create that metadata in your org separately.
 
 ---
 
